@@ -62,12 +62,10 @@ char	*extract_line(char *buffer)
 	line[i] = '\0';
 	return (line);
 }
-
 char	*save_rest(char *buffer)
 {
 	int		i;
 	int		j;
-	char	*new_buffer;
 
 	if (buffer == NULL)
 		return (NULL);
@@ -76,16 +74,18 @@ char	*save_rest(char *buffer)
 		i++;
 	if (!buffer[i])
 		return (free(buffer), NULL);
-	new_buffer = malloc(sizeof(char) * (ft_strlen(buffer) - i + 1));
-	if (new_buffer == NULL)
-		return (free(buffer), NULL);
 	i++;
 	j = 0;
 	while (buffer[i])
-		new_buffer[j++] = buffer[i++];
-	new_buffer[j] = '\0';
-	free(buffer);
-	return (new_buffer);
+	{
+		buffer[j] = buffer[i];
+		i++;
+		j++;
+	}
+	buffer[j] = '\0';
+	if (j == 0)
+		return (free(buffer), NULL);
+	return (buffer);
 }
 
 char	*get_next_line(int fd)
